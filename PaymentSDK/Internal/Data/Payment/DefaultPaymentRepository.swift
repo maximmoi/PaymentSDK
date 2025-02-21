@@ -7,12 +7,10 @@
 
 final class DefaultPaymentRepository: PaymentRepository {
 
-    private let logger: LoggerService
     private let service: RemotePaymentService
 
-    init(service: RemotePaymentService, logger: LoggerService) {
+    init(service: RemotePaymentService) {
         self.service = service
-        self.logger = logger
     }
 
     func setupAPI(apiToken: String) {

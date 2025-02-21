@@ -24,20 +24,10 @@ class Dispatcher<T: TargetType> {
     func execute<ResultObject: Decodable>(target: T) async throws(NetworkError) -> ResultObject {
         do {
             let request = try makeRequest(from: target)
+            logRequest(request)
 
-            logger.log(
-                event: "Did start network request",
-                metadata: [
-                    "url": request.url?.absoluteString ?? "nil",
-                    "method": request.httpMethod ?? "nil",
-                    "body": String(describing: try? JSONSerialization.jsonObject(with: request.httpBody ?? Data())),
-                ]
-            )
-            let (data, response) = try await provider.data(for: makeRequest(from: target))
-            logger.log(
-                event: "Did end network request",
-                metadata: ["response": String(describing: response as? HTTPURLResponse)]
-            )
+            let (data, response) = try await provider.data(for: request)
+            logResponse(response)
 
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode else {
                 throw NetworkError.invalidStatusCode(-1)
@@ -84,6 +74,27 @@ class Dispatcher<T: TargetType> {
         }
 
         return urlRequest
+    }
+
+    private func logRequest(_ request: URLRequest) {
+        logger.log(
+            event: "Did send network request",
+            metadata: [
+                "url": request.url?.absoluteString ?? "nil",
+                "method": request.httpMethod ?? "nil",
+                "body": String(describing: try? JSONSerialization.jsonObject(with: request.httpBody ?? Data())),
+            ]
+        )
+    }
+
+    private func logResponse(_ response: URLResponse) {
+        let stringResponse: String
+        if let httpResponse = response as? HTTPURLResponse {
+            stringResponse = String(describing: httpResponse)
+        } else {
+            stringResponse = String(describing: response)
+        }
+        logger.log(event: "Did receive network response", metadata: ["response": stringResponse])
     }
 
 }

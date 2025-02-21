@@ -5,16 +5,16 @@
 //  Created by Maksims Moisja on 20/02/2025.
 //
 
-import OSLog
-
 class LoggerService {
 
-    private let category = "Payments"
-    private lazy var logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: category)
+    private let category: String
+    private let storage: LogStorage
     private let logLevel: PSDKLogLevel
 
-    init(logLevel: PSDKLogLevel) {
+    init(logLevel: PSDKLogLevel, storage: LogStorage, category: String = "Payments") {
         self.logLevel = logLevel
+        self.storage = storage
+        self.category = category
     }
 
     func log(event: String, metadata: [String: String]? = nil) {
@@ -30,8 +30,7 @@ class LoggerService {
             .joined(separator: ", ")
 
         let logMessage = "[PaymentSDK - \(category)]: \(log)"
-        print(logMessage)
-        logger.debug("\(logMessage)")
+        storage.write(logMessage)
     }
 
 }

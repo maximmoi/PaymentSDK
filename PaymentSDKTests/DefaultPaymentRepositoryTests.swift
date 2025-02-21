@@ -16,7 +16,7 @@ struct DefaultPaymentRepositoryTests {
     @Test("Verify setupAPI method")
     func testSetupAPI() {
         let service = RemotePaymentServiceSpy()
-        let sut = DefaultPaymentRepository(service: service, logger: LoggerServiceSpy(logLevel: .verbose))
+        let sut = DefaultPaymentRepository(service: service)
 
         sut.setupAPI(apiToken: "token")
 
@@ -57,6 +57,6 @@ struct DefaultPaymentRepositoryTests {
     ) -> DefaultPaymentRepository {
 
         service.makePaymentResult = result
-        return DefaultPaymentRepository(service: service, logger: LoggerServiceSpy(logLevel: .verbose))
+        return DefaultPaymentRepository(service: service)
     }
 }

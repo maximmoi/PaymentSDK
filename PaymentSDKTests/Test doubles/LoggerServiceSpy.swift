@@ -10,17 +10,17 @@
 final class LoggerServiceSpy: LoggerService {
 
     var logs = [String]()
-    var metadata = [[String: String]]()
+    var metadata = [String: String]()
 
-    override init(logLevel: PSDKLogLevel = .verbose) {
-        super.init(logLevel: logLevel)
+    init() {
+        super.init(logLevel: .verbose, storage: LogStorageDummy())
     }
 
     override func log(event: String, metadata: [String : String]? = nil) {
         logs.append(event)
-        if let metadata {
-            self.metadata.append(metadata)
-        }
+        self.metadata.merge(metadata ?? [:], uniquingKeysWith: { $1 })
+
+        super.log(event: event, metadata: metadata)
     }
 
 }

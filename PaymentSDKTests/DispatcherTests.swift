@@ -12,6 +12,7 @@ struct DispatcherTests {
 
     private let requestDTO = MakePaymentRequestDTO(amount: 100, currency: "USD", recipient: "Batman")
     private let provider = NetworkServiceStub()
+    private let logger = LoggerServiceSpy()
     private let paymentTarget: PaymentsTarget
 
     init() {
@@ -108,8 +109,28 @@ struct DispatcherTests {
         }
     }
 
+    @Test("Verify did start network request is logged")
+    func testStartRequestLog() async throws {
+        let _: MakePaymentResponseDTO = try await makeSUT().execute(target: paymentTarget)
+
+        #expect(logger.logs.contains("Did send network request"))
+        #expect(logger.metadata["url"] == paymentTarget.baseURL.appending(path: paymentTarget.path).absoluteString)
+        #expect(logger.metadata["method"] == paymentTarget.method.rawValue)
+
+        let requestData = try! JSONEncoder().encode(requestDTO)
+        #expect(logger.metadata["body"] == String(describing: try? JSONSerialization.jsonObject(with: requestData)))
+    }
+
+    @Test("Verify did end network request is logged")
+    func testEndRequestLog() async throws {
+        let _: MakePaymentResponseDTO = try await makeSUT().execute(target: paymentTarget)
+
+        #expect(logger.logs.contains("Did receive network response"))
+        #expect(logger.metadata["response"] == String(describing: NetworkServiceStub.paymentSuccess.1))
+    }
+
     private func makeSUT(apiToken: String? = "token") -> Dispatcher<PaymentsTarget> {
-        let dispatcher = Dispatcher<PaymentsTarget>(logger: LoggerServiceSpy(), provider: provider)
+        let dispatcher = Dispatcher<PaymentsTarget>(logger: logger, provider: provider)
         dispatcher.apiToken = apiToken
         return dispatcher
     }

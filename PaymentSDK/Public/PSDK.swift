@@ -5,6 +5,8 @@
 //  Created by Maksims Moisja on 20/02/2025.
 //
 
+import OSLog
+
 public final class PSDK {
 
     private static let shared = PSDK()
@@ -24,12 +26,15 @@ public final class PSDK {
     }
 
     private static func makeUseCases(logLevel: PSDKLogLevel, useMocks: Bool) -> PaymentControllerUseCases {
-        let logger = LoggerService(logLevel: logLevel)
+        let logger = LoggerService(
+            logLevel: logLevel,
+            storage: Logger(subsystem: Bundle.main.bundleIdentifier!, category: "Payments")
+        )
         let dispatcher: Dispatcher<PaymentsTarget> = Dispatcher(
             logger: logger,
             provider: useMocks ? NetworkServiceStub() : URLSession.shared)
         let paymentService = DefaultRemotePaymentService(dispatcher: dispatcher, logger: logger)
-        let repository = DefaultPaymentRepository(service: paymentService, logger: logger)
+        let repository = DefaultPaymentRepository(service: paymentService)
         let setupApiUseCase = DefaultSetupUseCase(repository: repository)
         let makePaymentUseCase = DefaultMakePaymentUseCase(repository: repository)
 
