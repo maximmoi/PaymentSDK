@@ -13,8 +13,8 @@ public final class PSDK {
 
     private var controller: PaymentController?
 
-    public static func setup(apiToken: String, logLevel: PSDKLogLevel, useMocks: Bool) {
-        shared.controller = DefaultPaymentController(useCases: makeUseCases(logLevel: logLevel, useMocks: useMocks))
+    public static func setup(apiToken: String, logLevel: PSDKLogLevel, networkResult: Result<(Data, URLResponse), Error>? = nil) {
+        shared.controller = DefaultPaymentController(useCases: makeUseCases(logLevel: logLevel, networkResult: networkResult))
         shared.controller?.setup(apiToken: apiToken)
     }
 
@@ -25,14 +25,22 @@ public final class PSDK {
         return try await controller.makePayment(amount: amount, currency: currency, recipient: recipient)
     }
 
-    private static func makeUseCases(logLevel: PSDKLogLevel, useMocks: Bool) -> PaymentControllerUseCases {
+    private static func makeUseCases(logLevel: PSDKLogLevel, networkResult: Result<(Data, URLResponse), Error>?) -> PaymentControllerUseCases {
         let logger = LoggerService(
             logLevel: logLevel,
             storage: Logger(subsystem: Bundle.main.bundleIdentifier!, category: "Payments")
         )
-        let dispatcher: Dispatcher<PaymentsTarget> = Dispatcher(
-            logger: logger,
-            provider: useMocks ? NetworkServiceStub() : URLSession.shared)
+
+        let provider: NetworkService
+        if let networkResult {
+            let stub = NetworkServiceStub()
+            stub.result = networkResult
+            provider = stub
+        } else {
+            provider = URLSession.shared
+        }
+
+        let dispatcher: Dispatcher<PaymentsTarget> = Dispatcher(logger: logger, provider: provider)
         let paymentService = DefaultRemotePaymentService(dispatcher: dispatcher, logger: logger)
         let repository = DefaultPaymentRepository(service: paymentService)
         let setupApiUseCase = DefaultSetupUseCase(repository: repository)
@@ -40,5 +48,5 @@ public final class PSDK {
 
         return PaymentControllerUseCases(setupAPI: setupApiUseCase, makePayment: makePaymentUseCase)
     }
-    
+
 }

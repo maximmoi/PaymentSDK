@@ -17,10 +17,11 @@ enum NetworkError: Error {
         switch self {
         case .apiTokenNotSet: return "API token is not set"
         case .invalidStatusCode(let code): return "Response has invalid status code: \(code)"
-        case .encodingFailed(let error): return "Incoding failed: \(error.failureReason ?? error.localizedDescription)"
+        case .encodingFailed(let error): return "Encoding failed: \(error.failureReason ?? error.localizedDescription)"
         case .decodingFailed(let error): return "Decoding failed: \(error.failureReason ?? error.localizedDescription)"
         case .requestFailed(let error): return "Request failed: \(String(describing: error.failingURL)) || \(error.localizedDescription)"
         case .otherError(let errror): return "Unknown error: \(errror.localizedDescription)"
         }
     }
+
 }
