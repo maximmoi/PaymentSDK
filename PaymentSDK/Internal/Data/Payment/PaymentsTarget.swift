@@ -6,6 +6,7 @@
 //
 
 enum PaymentsTarget: TargetType {
+
     private static let urlString = "https://dummy.com"
 
     case makePayment(MakePaymentRequestDTO)
@@ -23,4 +24,5 @@ enum PaymentsTarget: TargetType {
     }
 
     var headers: [String : String]? { nil }
+    
 }

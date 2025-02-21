@@ -6,5 +6,7 @@
 //
 
 enum TargetTask {
+
     case requestJSONEncodable(Encodable)
+    
 }

@@ -6,6 +6,8 @@
 //
 
 protocol PaymentController {
+
     func setup(apiToken: String)
     func makePayment(amount: Double, currency: String, recipient: String) async throws -> String
+    
 }

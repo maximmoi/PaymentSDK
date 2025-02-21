@@ -5,7 +5,7 @@
 //  Created by Maksims Moisja on 20/02/2025.
 //
 
-public final class DefaultSetupUseCase: SetupUseCase {
+final class DefaultSetupUseCase: SetupUseCase {
 
     private let repository: PaymentRepository
 

@@ -7,17 +7,30 @@
 
 import OSLog
 
+/// Use this class to interact with PaymentSDK.
+/// You must call ``setup(apiToken:logLevel:networkResult:)`` method before interacting with other methods in SDK.
 public final class PSDK {
 
     private static let shared = PSDK()
 
     private var controller: PaymentController?
 
+    /// Use this method to setup PaymentSDK. You must call this method before interacting with other methods in PaymentSDK.
+    /// - Parameters:
+    ///   - apiToken: token to setup PaymentSDK.
+    ///   - logLevel: level of log messages, see ``PSDKLogLevel`` for more info.
+    ///   - networkResult: mocked response to return from network request. If value is **nil**, real network request will be made
     public static func setup(apiToken: String, logLevel: PSDKLogLevel, networkResult: Result<(Data, URLResponse), Error>? = nil) {
         shared.controller = DefaultPaymentController(useCases: makeUseCases(logLevel: logLevel, networkResult: networkResult))
         shared.controller?.setup(apiToken: apiToken)
     }
 
+    /// Use this method to make payment using PaymentSDK.
+    /// - Parameters:
+    ///   - amount: amount of the payment transaction
+    ///   - currency: currency of the payment transaction
+    ///   - recipient: recipient of payment transaction
+    /// - Returns: transaction ID of the successful payment
     public static func makePayment(amount: Double, currency: String, recipient: String) async throws -> String {
         guard let controller = shared.controller
         else { throw PSDKError.paymentFailure(NetworkError.apiTokenNotSet.error) }

@@ -6,5 +6,7 @@
 //
 
 enum TargetMethod: String {
+
     case post = "POST"
+    
 }

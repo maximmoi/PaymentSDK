@@ -5,7 +5,7 @@
 //  Created by Maksims Moisja on 20/02/2025.
 //
 
-public final class DefaultMakePaymentUseCase: MakePaymentUseCase {
+final class DefaultMakePaymentUseCase: MakePaymentUseCase {
 
     private let repository: PaymentRepository
 
