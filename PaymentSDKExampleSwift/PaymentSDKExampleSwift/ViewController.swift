@@ -58,6 +58,7 @@ class ViewController: UIViewController {
         }
         else {
             networkResult = nil
+            PSDK.setup(apiToken: "", logLevel: .verbose, networkResult: networkResult)
         }
 
         let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PaymentViewController")

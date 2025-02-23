@@ -41,28 +41,3 @@ final class DefaultRemotePaymentService: RemotePaymentService {
         }
     }
 }
-
-
-//let block = {
-////            do {
-//        let response: MakePaymentResponseDTO? = try? await self.dispatcher.execute(target: .makePayment(dto))
-//        return response
-////                if response.status == "success" {
-////                    return response
-////                } else {
-////                    throw PSDKError.paymentFailure(nil)
-////                }
-////            }
-////            catch {
-////                throw PSDKError.paymentFailure((error as? NetworkError)?.error)
-////            }
-//}
-//
-//if let response = await block(), response.status == "success" {
-//    return response
-//} else if retryCounter < retryTimes {
-//    return try await self.makePayment(dto)
-//} else {
-//    throw PSDKError.paymentFailure(nil)
-//}
-//}
