@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="D0b-hn-cUF">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -34,20 +35,31 @@
                                 </subviews>
                             </stackView>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ehA-fk-Nsk">
-                                <rect key="frame" x="16" y="234" width="361" height="216"/>
+                                <rect key="frame" x="16" y="248" width="361" height="216"/>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="Rr3-sH-a5W"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="812-pI-sO0"/>
                                 </connections>
                             </pickerView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment result" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xx8-dz-9Ws">
-                                <rect key="frame" x="15.999999999999993" y="198" width="113.33333333333331" height="20.333333333333343"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="VOf-dJ-aPt">
+                                <rect key="frame" x="16" y="198" width="361" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment result" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xx8-dz-9Ws">
+                                        <rect key="frame" x="0.0" y="0.0" width="113.33333333333333" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sT-gz-xy1">
+                                        <rect key="frame" x="121.33333333333336" y="0.0" width="239.66666666666663" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tBc-8e-Vu9">
-                                <rect key="frame" x="166" y="482.33333333333331" width="61.333333333333343" height="34.333333333333314"/>
+                                <rect key="frame" x="166" y="495.99999999999994" width="61.333333333333343" height="34.333333333333314"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Start"/>
                                 <connections>
@@ -60,18 +72,20 @@
                         <constraints>
                             <constraint firstItem="ehA-fk-Nsk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="5wi-2r-EEG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="YhC-Em-ZER" secondAttribute="trailing" constant="16" id="6SC-BB-DiP"/>
-                            <constraint firstItem="Xx8-dz-9Ws" firstAttribute="top" secondItem="YhC-Em-ZER" secondAttribute="bottom" constant="32" id="Dlg-Iy-o8u"/>
-                            <constraint firstItem="ehA-fk-Nsk" firstAttribute="top" secondItem="Xx8-dz-9Ws" secondAttribute="bottom" constant="16" id="K5Y-cs-11O"/>
+                            <constraint firstItem="VOf-dJ-aPt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Osq-TW-gYf"/>
                             <constraint firstItem="tBc-8e-Vu9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YeH-1H-9tW"/>
+                            <constraint firstItem="ehA-fk-Nsk" firstAttribute="top" secondItem="VOf-dJ-aPt" secondAttribute="bottom" id="daB-h7-d2D"/>
                             <constraint firstItem="YhC-Em-ZER" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="fUd-1u-173"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VOf-dJ-aPt" secondAttribute="trailing" constant="16" id="gxy-7x-ag4"/>
                             <constraint firstItem="tBc-8e-Vu9" firstAttribute="top" secondItem="ehA-fk-Nsk" secondAttribute="bottom" constant="32" id="ixf-1g-ihq"/>
                             <constraint firstItem="YhC-Em-ZER" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="32" id="nAF-Tn-kDR"/>
-                            <constraint firstItem="Xx8-dz-9Ws" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="nte-Y2-xZh"/>
+                            <constraint firstItem="VOf-dJ-aPt" firstAttribute="top" secondItem="YhC-Em-ZER" secondAttribute="bottom" constant="32" id="ovl-Zz-zdN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ehA-fk-Nsk" secondAttribute="trailing" constant="16" id="soQ-As-gm7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="nqE-zW-Cic"/>
                     <connections>
+                        <outlet property="labelResult" destination="9sT-gz-xy1" id="MSg-0P-NMf"/>
                         <outlet property="pickerView" destination="ehA-fk-Nsk" id="rNt-bZ-hU8"/>
                     </connections>
                 </viewController>

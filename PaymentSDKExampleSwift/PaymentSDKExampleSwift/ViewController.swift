@@ -20,15 +20,21 @@ class ViewController: UIViewController {
         "Unknown error"
     ]
 
-    private var selectedResult = 0
+    private var selectedResult = 0 {
+        didSet {
+            labelResult.text = results[selectedResult]
+        }
+    }
     private var useMocks = true
 
     @IBOutlet private var pickerView: UIPickerView!
+    @IBOutlet private var labelResult: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         pickerView.selectRow(selectedResult, inComponent: 0, animated: false)
+        labelResult.text = results[selectedResult]
     }
 
     // MARK: - User actions
@@ -36,6 +42,7 @@ class ViewController: UIViewController {
     @IBAction private func didChangeSwitchValue(_ sender: UISwitch) {
         pickerView.isUserInteractionEnabled = sender.isOn
         useMocks = sender.isOn
+        labelResult.text = useMocks ? results[selectedResult] : nil
     }
 
     @IBAction private func didTapStart(_ sender: UIButton) {
