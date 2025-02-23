@@ -14,8 +14,12 @@ final class DefaultMakePaymentUseCase: MakePaymentUseCase {
     }
 
     func callAsFunction(_ paymentData: MakePaymentUseCaseData) async throws -> String {
-        guard paymentData.amount > 0 else { throw PSDKError.paymentFailure("Amount must be bigger than 0") }
+        guard (paymentData.amount > 0 && paymentData.amount <= 1_000_000) else {
+            throw PSDKError.paymentFailure("Amount must be between 0 and 1_000_000")
+        }
+
         guard paymentData.currency.count == 3 else { throw PSDKError.paymentFailure("Currency must be 3 chars long") }
+
         guard (paymentData.recipient.count > 0 && paymentData.recipient.count < 17) else {
             throw PSDKError.paymentFailure("Recipient must be between 0 and 17 chars")
         }

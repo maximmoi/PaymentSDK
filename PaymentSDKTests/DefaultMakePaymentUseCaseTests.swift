@@ -40,12 +40,12 @@ struct DefaultMakePaymentUseCaseTests {
         })
     }
 
-    @Test("Verify throwing invalid amount use case")
-    func testInvalidAmountUseCase() async throws {
+    @Test("Verify throwing invalid amount use case", arguments: [-1, 0, 1_000_001])
+    func testInvalidAmountUseCase(amount: Double) async throws {
         let sut = makeSUT()
 
-        await #expect(throws: PSDKError.paymentFailure("Amount must be bigger than 0"), performing: {
-            try await sut(MakePaymentUseCaseData(amount: -1, currency: "USD", recipient: "Batman"))
+        await #expect(throws: PSDKError.paymentFailure("Amount must be between 0 and 1_000_000"), performing: {
+            try await sut(MakePaymentUseCaseData(amount: amount, currency: "USD", recipient: "Batman"))
         })
     }
 

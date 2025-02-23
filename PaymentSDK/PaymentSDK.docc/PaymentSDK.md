@@ -4,7 +4,7 @@ PaymentSDK provides easy way for you to make payments.
 
 ## Overview
 
-PaymentSDK is easy to use SDK, that allows you to make hasle free payments. It includes recipient validation, you can make payment with any amount in any currency.<br>
+PaymentSDK is easy to use SDK, that allows you to make hasle free payments. It includes recipient validation, you can make payment up to 1 000 000 in any currency.<br>
 PaymentSDK contains example app to demonstrate SDK's functionality.
 
 ### Getting started
